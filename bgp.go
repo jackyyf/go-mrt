@@ -262,12 +262,10 @@ func (r *bgpPathAttributeReader) Next() (*BGPPathAttribute, error) {
 		attr.Value, err = decodeASPathAttr(valueBytes, true)
 	case 18:
 		attr.Value, err = decodeAggregatorAttr(valueBytes, true)
-	case 21:
-		// Deprecated attribute
 	case 32:
 		attr.Value, err = decodeLargeCommunitiesAttr(valueBytes)
 	default:
-		return nil, fmt.Errorf("unknown BGP path attribute type code: %d", attr.TypeCode)
+		attr.Value = valueBytes
 	}
 
 	return attr, err
